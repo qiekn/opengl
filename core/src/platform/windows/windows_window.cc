@@ -29,9 +29,16 @@ void WindowsWindow::Init(const WindowProps& props) {
     glfwSetErrorCallback(GLFWErrorCallback);
     is_glfw_initialized = true;
     // Set all the required options for GLFW
-    /* uncomment this if you are using MacOS
+
     // NOTE: OpenGL on MacOS has effectively been deprecated since 2011.
     // It's stuck on an ancient version (4.1)
+
+    // If you are using MacOS, make sure to do these
+    // 1. Uncomment blow lines of codes
+    // 2. Go to https://gen.glad.sh/ generate gl4.1 and replace core/deps/glad
+    // 3. Disable `opengl_debug.hh & .cc`
+
+    /*
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
