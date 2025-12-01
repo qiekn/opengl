@@ -7,6 +7,13 @@
 
 namespace core {
 namespace utils {
+struct OrthographicCameraBounds {
+  float left, right;
+  float bottom, top;
+
+  float GetWidth() { return right - left; }
+  float GetHeight() { return top - bottom; }
+};
 
 class OrthographicCameraController {
 public:
@@ -21,6 +28,8 @@ public:
   float GetZoomLevel() const { return zoom_level_; }
   void SetZoomLevel(float level) { zoom_level_ = level; }
 
+  const OrthographicCameraBounds& GetBounds() const { return bounds_; }
+
 private:
   bool OnMouseScrolled(MouseScrollEvent& e);
   bool OnWindowResized(WindowResizeEvent& e);
@@ -28,6 +37,7 @@ private:
 private:
   float asprect_ratio_;
   float zoom_level_ = 1.0f;
+  OrthographicCameraBounds bounds_;
   OrthographicCamera camera_;
 
   bool rotation_;
