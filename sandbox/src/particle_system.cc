@@ -45,12 +45,16 @@ void ParticleSystem::OnRender(core::utils::OrthographicCamera& camera) {
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
     particle_shader_ = std::unique_ptr<core::utils::Shader>(core::utils::Shader::FromGLSLTextFiles(
-        "assets/shader.glsl.vert", "assets/shader.glsl.frag"));
+        "sandbox/assets/shader.glsl.vert", "sandbox/assets/shader.glsl.frag"));
     particle_shader_view_proj_ =
         glGetUniformLocation(particle_shader_->GetRendererID(), "u_ViewProj");
     particle_shader_transform_ =
         glGetUniformLocation(particle_shader_->GetRendererID(), "u_Transform");
     particle_shader_color_ = glGetUniformLocation(particle_shader_->GetRendererID(), "u_Color");
+  }
+
+  if (!particle_shader_ || particle_shader_->GetRendererID() == 0) {
+    return;
   }
 
   glUseProgram(particle_shader_->GetRendererID());
