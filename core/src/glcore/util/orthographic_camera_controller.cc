@@ -7,11 +7,13 @@
 namespace core {
 namespace utils {
 
+// clang-format off
 OrthographicCameraController::OrthographicCameraController(float aspectRatio, bool rotation)
     : asprect_ratio_(aspectRatio),
-      camera_(-asprect_ratio_ * zoom_level_, asprect_ratio_ * zoom_level_, -zoom_level_,
-              zoom_level_),
+      bounds_(-asprect_ratio_ * zoom_level_, asprect_ratio_ * zoom_level_, -zoom_level_, zoom_level_),
+      camera_(bounds_.left, bounds_.right, bounds_.bottom, bounds_.top),
       rotation_(rotation) {}
+// clang-format on
 
 void OrthographicCameraController::OnUpdate(DeltaTime dt) {
   if (Input::IsKeyPressed(KEY_A)) {
@@ -55,20 +57,22 @@ void OrthographicCameraController::OnEvent(Event& e) {
       GLCORE_BIND_EVENT_FN(OrthographicCameraController::OnWindowResized));
 }
 
+// clang-format off
 bool OrthographicCameraController::OnMouseScrolled(MouseScrollEvent& e) {
   zoom_level_ -= e.GetMouseYOffset() * 0.25f;
   zoom_level_ = std::max(zoom_level_, 0.25f);
-  camera_.SetProjection(-asprect_ratio_ * zoom_level_, asprect_ratio_ * zoom_level_, -zoom_level_,
-                        zoom_level_);
+  bounds_ = {-asprect_ratio_ * zoom_level_, asprect_ratio_ * zoom_level_, -zoom_level_, zoom_level_};
+  camera_.SetProjection(-asprect_ratio_ * zoom_level_, asprect_ratio_ * zoom_level_, -zoom_level_, zoom_level_);
   return false;
 }
 
 bool OrthographicCameraController::OnWindowResized(WindowResizeEvent& e) {
   asprect_ratio_ = (float)e.GetWidth() / (float)e.GetHeight();
-  camera_.SetProjection(-asprect_ratio_ * zoom_level_, asprect_ratio_ * zoom_level_, -zoom_level_,
-                        zoom_level_);
+  bounds_ = {-asprect_ratio_ * zoom_level_, asprect_ratio_ * zoom_level_, -zoom_level_, zoom_level_};
+  camera_.SetProjection(-asprect_ratio_ * zoom_level_, asprect_ratio_ * zoom_level_, -zoom_level_, zoom_level_);
   return false;
 }
+// clang-format on
 
 }  // namespace utils
 }  // namespace core
