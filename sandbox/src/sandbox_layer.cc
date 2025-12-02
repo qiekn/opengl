@@ -14,13 +14,13 @@ void SandboxLayer::OnAttach() {
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
   // Init here
-  particle_.ColorBegin = {254 / 255.0f, 212 / 255.0f, 123 / 255.0f, 1.0f};
-  particle_.ColorEnd = {254 / 255.0f, 109 / 255.0f, 41 / 255.0f, 1.0f};
-  particle_.SizeBegin = 0.5f, particle_.SizeVariation = 0.3f, particle_.SizeEnd = 0.0f;
-  particle_.LifeTime = 1.0f;
-  particle_.Velocity = {0.0f, 0.0f};
-  particle_.VelocityVariation = {3.0f, 1.0f};
-  particle_.Position = {0.0f, 0.0f};
+  particle_.color_begin = {254 / 255.0f, 212 / 255.0f, 123 / 255.0f, 1.0f};
+  particle_.color_end = {254 / 255.0f, 109 / 255.0f, 41 / 255.0f, 1.0f};
+  particle_.size_begin = 0.5f, particle_.size_variation = 0.3f, particle_.size_end = 0.0f;
+  particle_.life_time = 1.0f;
+  particle_.velocity = {0.0f, 0.0f};
+  particle_.velocity_variation = {3.0f, 1.0f};
+  particle_.position = {0.0f, 0.0f};
 }
 
 void SandboxLayer::OnDetach() {
@@ -55,7 +55,7 @@ void SandboxLayer::OnUpdate(DeltaTime dt) {
     auto pos = camera_controller_.GetCamera().GetPosition();
     x = (x / width) * bounds.GetWidth() - bounds.GetWidth() * 0.5f;
     y = bounds.GetHeight() * 0.5f - (y / height) * bounds.GetHeight();
-    particle_.Position = {x + pos.x, y + pos.y};
+    particle_.position = {x + pos.x, y + pos.y};
     for (int i = 0; i < 5; i++) particle_system_.Emit(particle_);
   }
 
@@ -67,8 +67,8 @@ void SandboxLayer::OnImGuiRender() {
   // ImGui here
 
   ImGui::Begin("Settings");
-  ImGui::ColorEdit4("Birth Color", glm::value_ptr(particle_.ColorBegin));
-  ImGui::ColorEdit4("Death Color", glm::value_ptr(particle_.ColorEnd));
-  ImGui::DragFloat("Life Time", &particle_.LifeTime, 0.1f, 0.0f, 1000.0f);
+  ImGui::ColorEdit4("Birth Color", glm::value_ptr(particle_.color_begin));
+  ImGui::ColorEdit4("Death Color", glm::value_ptr(particle_.color_end));
+  ImGui::DragFloat("Life Time", &particle_.life_time, 0.1f, 0.0f, 1000.0f);
   ImGui::End();
 }

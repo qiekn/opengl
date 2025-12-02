@@ -4,11 +4,11 @@
 #include <utils.h>
 
 struct ParticleProps {
-  glm::vec2 Position;
-  glm::vec2 Velocity, VelocityVariation;
-  glm::vec4 ColorBegin, ColorEnd;
-  float SizeBegin, SizeEnd, SizeVariation;
-  float LifeTime = 1.0f;
+  glm::vec2 position;
+  glm::vec2 velocity, velocity_variation;
+  glm::vec4 color_begin, color_end;
+  float size_begin, size_end, size_variation;
+  float life_time = 1.0f;
 };
 
 class ParticleSystem {
@@ -18,7 +18,7 @@ public:
   void OnUpdate(core::DeltaTime dt);
   void OnRender(core::utils::OrthographicCamera& camera);
 
-  void Emit(const ParticleProps& particleProps);
+  void Emit(const ParticleProps& particle_props);
 
 private:
   struct Particle {
