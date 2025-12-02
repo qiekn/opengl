@@ -13,14 +13,14 @@ public:
 
   GLuint GetRendererID() { return renderer_id_; }
 
-  static Shader* FromGLSLTextFiles(const std::string& vertexShaderPath,
-                                   const std::string& fragmentShaderPath);
+  static Shader* FromGLSLTextFiles(const std::string& vertex_shader_path,
+                                   const std::string& fragment_shader_path);
 
 private:
   Shader() = default;
 
-  void LoadFromGLSLTextFiles(const std::string& vertexShaderPath,
-                             const std::string& fragmentShaderPath);
+  void LoadFromGLSLTextFiles(const std::string& vertex_shader_path,
+                             const std::string& fragment_shader_path);
   GLuint CompileShader(GLenum type, const std::string& source);
 
 private:
