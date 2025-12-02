@@ -28,6 +28,8 @@ public:
   auto rbegin() const { return layers_.rbegin(); }
   auto rend() const { return layers_.rend(); }
 
+  auto size() const { return layers_.size(); }
+
 private:
   std::vector<Scope<Layer>> layers_;
   unsigned int layer_insert_index_ = 0;
