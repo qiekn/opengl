@@ -2,6 +2,7 @@
 
 #include <glad/gl.h>
 
+#include <memory>
 #include <string>
 
 namespace core {
@@ -13,8 +14,9 @@ public:
 
   GLuint GetRendererID() { return renderer_id_; }
 
-  static Shader* FromGLSLTextFiles(const std::string& vertex_shader_path,
-                                   const std::string& fragment_shader_path);
+  static std::unique_ptr<Shader> FromGLSLTextFiles(
+      const std::string& vertex_shader_path,
+      const std::string& fragment_shader_path);
 
 private:
   Shader() = default;

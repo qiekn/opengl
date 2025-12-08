@@ -51,9 +51,10 @@ GLuint Shader::CompileShader(GLenum type, const std::string& source) {
   return shader;
 }
 
-Shader* Shader::FromGLSLTextFiles(const std::string& vertex_shader_path,
-                                  const std::string& fragment_shader_path) {
-  Shader* shader = new Shader();
+std::unique_ptr<Shader> Shader::FromGLSLTextFiles(
+    const std::string& vertex_shader_path,
+    const std::string& fragment_shader_path) {
+  std::unique_ptr<Shader> shader(new Shader());
   shader->LoadFromGLSLTextFiles(vertex_shader_path, fragment_shader_path);
   return shader;
 }
