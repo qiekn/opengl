@@ -1,11 +1,14 @@
 #include "glcore/core/core.hh"
-#include "sandbox_layer.hh"
+#include "hello_triangle.hh"
 
 using namespace core;
 
 class Sandbox : public Application {
 public:
-  Sandbox() { PushLayer(CreateScope<SandboxLayer>()); }
+  Sandbox() {
+    // Test the first triangle
+    PushLayer(CreateScope<HelloTriangle>());
+  }
 };
 
 int main() {

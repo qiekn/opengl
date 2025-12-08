@@ -35,13 +35,26 @@ target_link_libraries(core PUBLIC
 
 # -----------------------------------------------------------------------------: Sandbox
 set(sandbox_dir "${PROJECT_SOURCE_DIR}/sandbox")
-file(GLOB_RECURSE sandbox_sources CONFIGURE_DEPENDS "${sandbox_dir}/src/*.cc")
-file(GLOB_RECURSE sandbox_headers CONFIGURE_DEPENDS "${sandbox_dir}/include/*.hh")
+set(examples_dir "${PROJECT_SOURCE_DIR}/examples")
+
+file(GLOB_RECURSE sandbox_sources CONFIGURE_DEPENDS
+  "${sandbox_dir}/*.cc"
+  "${examples_dir}/*.cc"
+)
+
+file(GLOB_RECURSE sandbox_headers CONFIGURE_DEPENDS
+  "${sandbox_dir}/include/*.hh"
+  "${examples_dir}/include/*.cc"
+)
+
+message("sources: " ${sandbox_sources})
+message("headers: " ${sandbox_headers})
 
 add_executable(sandbox ${sandbox_sources})
 
 target_include_directories(sandbox PRIVATE
   ${sandbox_dir}/include
+  ${examples_dir}/include
 )
 
 target_link_libraries(sandbox PRIVATE
