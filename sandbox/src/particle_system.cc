@@ -44,7 +44,7 @@ void ParticleSystem::OnRender(core::utils::OrthographicCamera& camera) {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, quad_ib);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-    particle_shader_ = std::unique_ptr<core::utils::Shader>(core::utils::Shader::FromGLSLTextFiles(
+    particle_shader_ = std::unique_ptr<core::utils::Shader>(core::utils::Shader::Load(
         "sandbox/assets/shader.glsl.vert", "sandbox/assets/shader.glsl.frag"));
     particle_shader_view_proj_ =
         glGetUniformLocation(particle_shader_->GetRendererID(), "u_ViewProj");
