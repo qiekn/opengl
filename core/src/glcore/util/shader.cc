@@ -7,12 +7,22 @@
 namespace core {
 namespace utils {
 
+// ----------------------------------------------------------------------------: Static
+
+/**
+ * @brief Reads the entire content of a file into a std::string.
+ */
 static std::string ReadFileAsString(const std::string& filepath) {
   std::string result;
   std::ifstream in(filepath, std::ios::in | std::ios::binary);
   if (in) {
+    // 1. Determine file size
     in.seekg(0, std::ios::end);
+
+    // 2. Allocate string buffer
     result.resize((size_t)in.tellg());
+
+    // 3. Read content
     in.seekg(0, std::ios::beg);
     in.read(&result[0], result.size());
     in.close();
@@ -23,7 +33,17 @@ static std::string ReadFileAsString(const std::string& filepath) {
   return result;
 }
 
+// ----------------------------------------------------------------------------: Public Methods
+
 Shader::~Shader() { glDeleteProgram(renderer_id_); }
+
+std::unique_ptr<Shader> Shader::Load(const std::string& vertex_shader_path,
+                                     const std::string& fragment_shader_path) {
+  std::unique_ptr<Shader> shader(new Shader());
+  shader->LoadFromGLSLTextFiles(vertex_shader_path, fragment_shader_path);
+  return shader;
+}
+// ----------------------------------------------------------------------------: Private Methods
 
 GLuint Shader::CompileShader(GLenum type, const std::string& source) {
   GLuint shader = glCreateShader(type);
@@ -45,17 +65,8 @@ GLuint Shader::CompileShader(GLenum type, const std::string& source) {
     glDeleteShader(shader);
 
     LOG_ERROR("{0}", info_log.data());
-    // HZ_CORE_ASSERT(false, "Shader compilation failure!");
   }
 
-  return shader;
-}
-
-std::unique_ptr<Shader> Shader::FromGLSLTextFiles(
-    const std::string& vertex_shader_path,
-    const std::string& fragment_shader_path) {
-  std::unique_ptr<Shader> shader(new Shader());
-  shader->LoadFromGLSLTextFiles(vertex_shader_path, fragment_shader_path);
   return shader;
 }
 
