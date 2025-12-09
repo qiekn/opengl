@@ -36,7 +36,7 @@ void HelloTriangle::OnAttach() {
   glEnableVertexAttribArray(0);
 
   // ----------------------------------------------------------------------------: shader
-  shader_ = Shader::FromGLSLTextFiles("assets/shaders/example.vert", "assets/shaders/example.frag");
+  shader_ = Shader::Load("assets/shaders/example.vert", "assets/shaders/example.frag");
 }
 
 void HelloTriangle::OnDetach() {}
